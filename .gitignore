@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+
+# Models (YOLO weights - VERY BIG FILES)
+*.pt
+
+# Videos / Images datasets
+*.mp4
+*.avi
+*.mkv
+images/
+
+# Output results
+runs/
+results/
+output/
+
+# IDE
+.idea/
+
+# OS
+.DS_Store
