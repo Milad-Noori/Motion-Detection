@@ -21,31 +21,31 @@ from ultralytics import YOLO
 
 # region Step 2 ...
 
-# path = "images/sampleImage.jpg"
-# model = YOLO("yolov8n.pt")
-# results = model.predict(source=path, classes=[2])
-# results[0].show()
+path = "images/sampleImage.jpg"
+model = YOLO("yolov8n.pt")
+results = model.predict(source=path, classes=[2])
+results[0].show()
 
 # endregion
-
+#
 # region Step 3 ...
 
-# path = "images/sampleImage.jpg"
-# model = YOLO("model/yolov8x.pt")
-# selected_class = [0,2]
-# results = model.predict(source=path, classes=selected_class, save=True, conf = 0.7)
-# results[0].show()
+path = "images/sampleImage.jpg"
+model = YOLO("model/yolov8x.pt")
+selected_class = [0,2]
+results = model.predict(source=path, classes=selected_class, save=True, conf = 0.7)
+results[0].show()
 
 # endregion
-
+#
 # region Step 4 ...
 
-# path = "images/sampleImage.jpg"
-# model = YOLO("model/yolov8x.pt")
-# selected_class = [0,2]
-# results = model.predict(source=path, classes=selected_class, save=True, conf = 0.7)
-# results[0].show()
-# results[0].save(filename="result.jpg")
+path = "images/sampleImage.jpg"
+model = YOLO("model/yolov8x.pt")
+selected_class = [0,2]
+results = model.predict(source=path, classes=selected_class, save=True, conf = 0.7)
+results[0].show()
+results[0].save(filename="result.jpg")
 
 # endregion
 
