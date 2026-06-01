@@ -54,40 +54,40 @@ from ultralytics import YOLO
 # ---------------------------------------------------------------
 # region Method 2
 
-# import cv2
-# from ultralytics import YOLO
-#
-#
-# def process_video(path: str):
-#     vs = cv2.VideoCapture(path)
-#     model = YOLO("model/yolov8x.pt")
-#
-#     while True:
-#         (grabbed, frame) = vs.read()
-#         if not grabbed:
-#             break
-#         results = model.predict(frame, stream=False)
-#         detection_classes = results[0].names
-#         # results[0].show()
-#         for result in results:
-#             for data in result.boxes.data.tolist():
-#                 # print(data)
-#                 code = data[5]
-#                 draw_box(data=data, image=frame, name=detection_classes[code])
-#         cv2.imshow("Frame", frame)
-#         cv2.waitKey(1)
-#
-#
-# def draw_box(data, image, name):
-#     (x1, y1, x2, y2, confidence, code) = data
-#     p1 = (int(x1)-3, int(y1)-2)
-#     p2 = (int(x2)+2, int(y2)+1)
-#     cv2.rectangle(image, p1, p2, (0, 0, 255), 3)
-#     cv2.putText(image, name, p1, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-#     return image
-#
-#
-# process_video(path='images/traffic.mp4')
+import cv2
+from ultralytics import YOLO
+
+
+def process_video(path: str):
+    vs = cv2.VideoCapture(path)
+    model = YOLO("model/yolov8x.pt")
+
+    while True:
+        (grabbed, frame) = vs.read()
+        if not grabbed:
+            break
+        results = model.predict(frame, stream=False)
+        detection_classes = results[0].names
+        # results[0].show()
+        for result in results:
+            for data in result.boxes.data.tolist():
+                # print(data)
+                code = data[5]
+                draw_box(data=data, image=frame, name=detection_classes[code])
+        cv2.imshow("Frame", frame)
+        cv2.waitKey(1)
+
+
+def draw_box(data, image, name):
+    (x1, y1, x2, y2, confidence, code) = data
+    p1 = (int(x1)-3, int(y1)-2)
+    p2 = (int(x2)+2, int(y2)+1)
+    cv2.rectangle(image, p1, p2, (0, 0, 255), 3)
+    cv2.putText(image, name, p1, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+    return image
+
+
+process_video(path='images/traffic.mp4')
 
 # endregion
 # ------------------------------------------------------------------
