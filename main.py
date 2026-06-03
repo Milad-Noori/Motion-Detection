@@ -1,8 +1,8 @@
 # https://docs.ultralytics.com/models/yolov8
 from ultralytics import YOLO
 
-# path = "images/sampleImage.jpg"
-# model = YOLO("model/yolov10x.pt")
+path = "images/sampleImage.jpg"
+model = YOLO("model/yolov10x.pt")
 #  5 persons, 16 cars, 409.4ms - Speed: 2.2ms
 
 # model = YOLO("model/yolov8x.pt")
@@ -13,9 +13,9 @@ from ultralytics import YOLO
 
 # region Step 1 ...
 
-# results = model.predict(source=path)
-# results[0].show()
-# print(results[0].names)
+results = model.predict(source=path)
+results[0].show()
+print(results[0].names)
 
 # endregion
 
