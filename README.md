@@ -1,124 +1,191 @@
-Motion Detection & Vehicle Tracking System (YOLOv8)
+# 🚗 Car Motion Detection & Vehicle Tracking System
 
-A real-time computer vision system for vehicle detection, tracking, and heatmap generation using YOLOv8 and OpenCV.
+A real-time computer vision project for vehicle detection, tracking, and motion analysis using YOLOv8 and OpenCV.
 
-This project demonstrates object detection, tracking, and motion analysis for vehicles in video streams.
+This system can detect vehicles in videos, track their movement across frames, generate motion heatmaps, and serve as a foundation for traffic monitoring and intelligent transportation applications.
 
+---
 
+## 🚀 Features
 
+- Real-time vehicle detection using YOLOv8
+- Multi-object vehicle tracking
+- Motion heatmap generation
+- Vehicle movement visualization
+- Video processing with OpenCV
+- Counting line implementation
+- Support for cars, motorcycles, buses, and trucks
+- Export processed video results
 
-🚀 Features
-🚗 Real-time vehicle detection using YOLOv8
-🎯 Vehicle tracking across video frames
-📊 Heatmap generation for movement analysis
-📹 Video processing with OpenCV
-📍 Counting line for vehicle analytics (custom implementation)
-⚡ Fast inference using pretrained YOLO models
-🧠 Tech Stack
-Python
-Ultralytics YOLOv8
-OpenCV
-NumPy
-YOLO Tracking & Heatmap (Ultralytics Solutions)
-📂 Project Structure
-motion-detection/
+---
+
+## 🧠 Technologies Used
+
+- Python
+- YOLOv8 (Ultralytics)
+- OpenCV
+- NumPy
+
+---
+
+## 📂 Project Structure
+
+```text
+Car_Motion-Detection/
 │
 ├── main.py
 ├── modified_version.py
 ├── model/
-│   └── yolov8l.pt (not included)
+│   └── yolov8x.pt
+│
 ├── images/
-│   └── sample videos/images
-├── results/
+│   ├── sampleImage.jpg
+│   └── traffic.mp4
+│
 ├── requirements.txt
+├── LICENSE
 └── README.md
-⚠️ Important Note (Models & Data)
+```
 
-Pretrained YOLO models and video files are not included in this repository due to their large size.
+---
 
-You can download YOLOv8 models automatically via Ultralytics:
+## 📥 Installation
 
-yolo download model=yolov8l.pt
+### 1. Clone the repository
 
-Or they will be downloaded automatically on first run.
-
-🔗 Installation
-1. Clone the repository
+```bash
 git clone https://github.com/Milad-Noori/Car_Motion-Detection.git
 cd Car_Motion-Detection
-2. Create virtual environment (recommended)
+```
+
+### 2. Create a virtual environment (optional)
+
+#### Windows
+
+```bash
 python -m venv venv
-
-Activate:
-
-Windows
-
 venv\Scripts\activate
+```
 
-Linux / Mac
+#### Linux / macOS
 
+```bash
+python -m venv venv
 source venv/bin/activate
-3. Install dependencies
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-Or manually:
+---
 
-pip install ultralytics opencv-python numpy
-▶️ Run Project
-Vehicle Detection & Tracking
+## 📦 Requirements
+
+```txt
+ultralytics
+opencv-python
+numpy
+torch
+torchvision
+matplotlib
+```
+
+---
+
+## ▶️ Running the Project
+
+### Vehicle Detection and Tracking
+
+```bash
 python main.py
-Heatmap Generation (Motion Analysis)
+```
+
+### Heatmap Generation
+
+```bash
 python modified_version.py
-📊 How It Works
-🔹 Detection Pipeline
+```
+
+---
+
+## 🚗 Supported Vehicle Classes
+
+| Class ID | Vehicle Type |
+|-----------|-------------|
+| 2 | Car |
+| 3 | Motorcycle |
+| 5 | Bus |
+| 7 | Truck |
+
+---
+
+## 🔄 Detection Pipeline
+
+```text
 Input Video
-    ↓
-YOLOv8 Object Detection
-    ↓
-Vehicle Filtering (Car, Bus, Truck, Motorcycle)
-    ↓
-Tracking IDs Assignment
-    ↓
+     │
+     ▼
+YOLOv8 Detection
+     │
+     ▼
+Vehicle Filtering
+     │
+     ▼
+Object Tracking
+     │
+     ▼
 Motion Analysis
-    ↓
-Visualization (Bounding Boxes + Heatmap)
-🚗 Vehicle Classes Used
-Class ID	Object
-2	Car
-3	Motorcycle
-5	Bus
-7	Truck
-📈 Features Explained
-🎯 Vehicle Tracking
+     │
+     ▼
+Heatmap / Visualization
+```
 
-Tracks vehicles across frames using YOLO tracking.
+---
 
-📍 Counting Line
+## 📊 Example Applications
 
-A horizontal baseline is drawn to analyze vehicle movement.
+- Traffic monitoring
+- Vehicle counting
+- Smart city analytics
+- Parking management systems
+- Transportation research
+- Road surveillance
 
-🔥 Heatmap Visualization
+---
 
-Generates movement intensity heatmap using Ultralytics solutions.
+## ⚠️ Note
 
-🧪 Example Output
-Bounding boxes around vehicles
-Real-time tracking IDs
-Motion heatmap visualization
-Video output saved with detections
-🐳 Future Improvements
-Vehicle speed estimation
-Lane detection system
-Real-time dashboard (Flask / Streamlit)
-License plate recognition (ANPR)
-Database logging system
-API deployment
-👨‍💻 Author
+Pretrained YOLO models (`.pt`) and large video files are not included in this repository due to their size.
 
-Milad Noori
+The required model will be downloaded automatically by Ultralytics when running the project for the first time.
 
-GitHub: https://github.com/Milad-Noori
-Machine Learning & Computer Vision Developer
-⭐ If you like this project
+---
 
-Give it a ⭐ on GitHub and follow for more AI / CV projects.
+## 🔮 Future Improvements
+
+- Vehicle speed estimation
+- License plate recognition (ANPR)
+- Lane detection
+- Traffic density analysis
+- Flask/FastAPI deployment
+- Real-time webcam support
+
+---
+
+## 👨‍💻 Author
+
+**Milad Noori**
+
+Machine Learning Engineer | Computer Vision Developer
+
+GitHub:
+https://github.com/Milad-Noori
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
