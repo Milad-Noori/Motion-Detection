@@ -5,7 +5,7 @@ import cv2
 
 def track_create_heatmap():
     writer = None
-    path = "images/cartracking_Resize.mp4"
+    path = "images/Highway.mp4"
     vs = cv2.VideoCapture(path)
 
     model = YOLO("yolov8l.pt")
@@ -53,7 +53,7 @@ def track_create_heatmap():
 
         if writer is None:
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-            writer = cv2.VideoWriter("cartracking_Resize_result.mp4", fourcc, 24,
+            writer = cv2.VideoWriter("Highway_Resize_result.mp4", fourcc, 24,
                                      (frame.shape[1], frame.shape[0]))
         writer.write(frame)
 
