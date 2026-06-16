@@ -1,23 +1,11 @@
-# Python
+venv/
 __pycache__/
 *.pyc
-
-# Models (YOLO weights - VERY BIG FILES)
-*.pt
-
-# Videos / Images datasets
 *.mp4
 *.avi
-*.mkv
-images/
-
-# Output results
+*.mov
+*.weights
+*.pt
 runs/
-results/
-output/
-
-# IDE
-.idea/
-
-# OS
-.DS_Store
+datasets/
+.env
