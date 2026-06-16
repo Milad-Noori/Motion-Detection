@@ -1,11 +1,23 @@
+# Exclusion list for AI & Machine Learning projects
+
+# Virtual Environments
 venv/
-__pycache__/
-*.pyc
+.venv/
+env/
+
+# Weights and Large Models
+*.pt
+*.pth
+*.onnx
+
+# Video and Media files
 *.mp4
 *.avi
 *.mov
-*.weights
-*.pt
-runs/
-datasets/
-.env
+*.mkv
+images/
+
+# IDE filesس
+.idea/
+.vscode/
+__pycache__/
