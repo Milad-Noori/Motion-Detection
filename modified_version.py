@@ -1,70 +1,83 @@
-from ultralytics import YOLO
-from ultralytics import solutions
 import cv2
+from ultralytics import YOLO, solutions
 
 
-def track_create_heatmap():
-    writer = None
-    path = "images/Highway.mp4"
-    vs = cv2.VideoCapture(path)
+def get_video_properties(video_capture):
+    """Extracts and returns video metadata dynamically."""
+    width = int(video_capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video_capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = int(video_capture.get(cv2.CAP_PROP_FPS))
 
-    model = YOLO("yolov8l.pt")
+    # Fallback to 24 FPS if metadata is corrupted
+    actual_fps = fps if fps > 0 else 24
+    return width, height, actual_fps
 
-    (grabbed, frame) = vs.read()
-    if not grabbed:
-        print("Failed to read video")
+
+def generate_video_heatmap(input_path: str, output_path: str, target_classes: list):
+    """
+    Processes the input video, tracks specified classes using YOLO,
+    generates a real-time heatmap overlay, and writes the output to a file.
+    """
+    # Initialize video capture
+    cap = cv2.VideoCapture(input_path)
+    if not cap.isOpened():
+        print(f"[Error] Could not open source video: {input_path}")
         return
 
-    vs.set(cv2.CAP_PROP_POS_FRAMES, 0)
+    # Get dynamic video configurations
+    frame_width, frame_height, fps = get_video_properties(cap)
 
-    heatmap_obj = solutions.Heatmap(
-        model=model,
+    # Initialize video writer
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    video_writer = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
+
+    # Initialize YOLO model and Heatmap tool
+    yolo_model = YOLO("yolov8l.pt")
+    heatmap_overlay = solutions.Heatmap(
+        model=yolo_model,
         colormap=cv2.COLORMAP_AUTUMN,
         show=False,
-        # classes=[0, 2]
+        classes=target_classes
     )
 
-    classes_for_heatmap = [0, 2]
+    print(f"[Info] Processing started. Exporting to: {output_path}")
 
-    while True:
+    try:
+        while cap.isOpened():
+            success, current_frame = cap.read()
+            if not success:
+                break
 
-        (grabbed, frame) = vs.read()
-        if not grabbed:
-            break
+            # Core processing: tracking and heatmap extraction combined
+            processed_frame = heatmap_overlay.generate_image(current_frame)
 
-        results = model.track(frame, persist=True, classes=classes_for_heatmap)
+            # Display real-time output in a GUI window
+            cv2.imshow("Traffic Analytics - Heatmap Engine", processed_frame)
 
-        if results and results[0].boxes is not None:
+            # Stream frame to the output video file
+            video_writer.write(processed_frame)
 
-            heatmap_result = heatmap_obj(frame)
-
-            if hasattr(heatmap_result, 'plot_im'):
-                frame = heatmap_result.plot_im
-
-
-            elif isinstance(heatmap_result, tuple) and len(heatmap_result) > 0:
-                frame = heatmap_result[0]
-
-
-            else:
-                frame = heatmap_result
-
-        cv2.imshow('Heatmap', frame)
-
-        if writer is None:
-            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-            writer = cv2.VideoWriter("Highway_Resize_result.mp4", fourcc, 24,
-                                     (frame.shape[1], frame.shape[0]))
-        writer.write(frame)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    vs.release()
-    if writer:
-        writer.release()
-    cv2.destroyAllWindows()
+            # Standard exit on pressing 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                print("[Info] Process interrupted by user.")
+                break
+    finally:
+        # Safe resource cleanup
+        cap.release()
+        video_writer.release()
+        cv2.destroyAllWindows()
+        print("[Info] Resources released. Processing complete.")
 
 
 if __name__ == "__main__":
-    track_create_heatmap()
+    # Project configurations
+    VIDEO_SOURCE = "images/Highway.mp4"
+    VIDEO_OUTPUT = "Highway_Resize_result.mp4"
+    CLASSES_TO_TRACK = [0, 2]  # 0: Person, 2: Car
+
+    # Execute main pipeline
+    generate_video_heatmap(
+        input_path=VIDEO_SOURCE,
+        output_path=VIDEO_OUTPUT,
+        target_classes=CLASSES_TO_TRACK
+    )
